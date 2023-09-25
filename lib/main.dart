@@ -1,3 +1,6 @@
+import 'package:cms_dashboard/common/navigation/router_provider.dart';
+import 'package:cms_dashboard/providers/app_config_provider.dart';
+import 'package:cms_dashboard/providers/menu_app_controller.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -6,13 +9,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cms_dashboard/screens/main/main_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'app_landing.dart';
 import 'constants.dart';
 import 'firebase_options.dart';
 import 'providers/services/package_info_provider.dart';
-import 'providers/services/paths_provider.dart';
 import 'providers/services/shared_prefs_provider.dart';
 
 Future<void> main() async {
@@ -51,21 +53,41 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appConfig = ref.watch(appConfigProvider);
+    ref.watch(menuAppControllerProvider);
+
+    if (appConfig.containsKey('useFlutterNavigation') && appConfig['useFlutterNavigation']) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Admin Panel',
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: bgColor,
+          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.white),
+          canvasColor: secondaryColor,
+        ),
+        home: const AppLanding(),
+      );
+    }
+
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
       title: 'Flutter Admin Panel',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      home: const MainScreen(),
     );
   }
 }

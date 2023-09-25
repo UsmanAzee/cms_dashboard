@@ -1,7 +1,9 @@
+import 'package:cms_dashboard/providers/app_config_provider.dart';
 import 'package:cms_dashboard/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:cms_dashboard/models/MyFiles.dart';
-import '../../../constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../../constants.dart';
 import 'file_info_card.dart';
 
 class MyFiles extends StatelessWidget {
@@ -21,16 +23,20 @@ class MyFiles extends StatelessWidget {
               "My Files",
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+            Consumer(
+              builder: (context, ref, child) => ElevatedButton.icon(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: defaultPadding * 1.5,
+                    vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+                  ),
                 ),
+                onPressed: () {
+                  ref.watch(appConfigProvider.notifier).toggleNavigationType();
+                },
+                icon: const Icon(Icons.add),
+                label: const Text("Add New"),
               ),
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              label: const Text("Add New"),
             ),
           ],
         ),
