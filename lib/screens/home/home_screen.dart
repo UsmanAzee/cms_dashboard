@@ -63,9 +63,9 @@ class HomeScreen extends ConsumerWidget {
 
         return doPop;
       },
-      child: const PageWrapper(
+      child: PageWrapper(
         page: Pages.home,
-        body: DashboardScreen(),
+        body: const DashboardScreen(),
       ),
     );
   }

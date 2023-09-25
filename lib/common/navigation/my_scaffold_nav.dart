@@ -103,7 +103,7 @@ class _MyScaffoldState extends ConsumerState<MyScaffoldNav> {
       }
     });
 
-    final Key scaffoldKey = ref.watch(menuAppControllerProvider.notifier).scaffoldKey;
+    final Key scaffoldKey = ref.watch(menuAppControllerProvider);
 
     final bool isDesktop = Responsive.isDesktop(context);
 

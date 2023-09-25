@@ -26,10 +26,10 @@ class PageWrapper extends ConsumerWidget {
     }
 
     return MyScaffoldRouter(
+      scaffoldKey: GlobalKey<ScaffoldState>(debugLabel: page.title),
       page: page,
       body: body,
     );
-
 
     // return Responsive(
     //   mobile: FileInfoCardGridView(

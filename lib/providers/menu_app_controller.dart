@@ -7,14 +7,16 @@ final menuAppControllerProvider = StateNotifierProvider<MenuAppController, Globa
 
 class MenuAppController extends StateNotifier<GlobalKey<ScaffoldState>> {
   final Ref ref;
-  MenuAppController(this.ref) : super(GlobalKey<ScaffoldState>());
-
-  GlobalKey<ScaffoldState> get scaffoldKey => state;
+  MenuAppController(this.ref) : super(GlobalKey<ScaffoldState>(debugLabel: "menuAppControllerProvider"));
 
   void controlMenu() {
     debugPrint("toggle drawer");
     if (!state.currentState!.isDrawerOpen) {
       state.currentState!.openDrawer();
     }
+  }
+
+  void updateScaffoldKey(GlobalKey<ScaffoldState> newKey) {
+    state = newKey;
   }
 }

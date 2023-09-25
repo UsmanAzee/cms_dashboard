@@ -60,7 +60,6 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appConfig = ref.watch(appConfigProvider);
-    ref.watch(menuAppControllerProvider);
 
     if (appConfig.containsKey('useFlutterNavigation') && appConfig['useFlutterNavigation']) {
       return MaterialApp(

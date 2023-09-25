@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,8 +14,11 @@ class MyScaffoldRouter extends ConsumerWidget {
   final Widget body;
   final PageData page;
 
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
   const MyScaffoldRouter({
     super.key,
+    required this.scaffoldKey,
     required this.body,
     required this.page,
   });
@@ -53,25 +57,25 @@ class MyScaffoldRouter extends ConsumerWidget {
       }
     });
 
-    final Key scaffoldKey = ref.watch(menuAppControllerProvider.notifier).scaffoldKey;
+    final GlobalKey<ScaffoldState> sKey = ref.watch(menuAppControllerProvider);
 
     final bool isDesktop = Responsive.isDesktop(context);
 
     // Scaffold wrapper
     return Scaffold(
-      key: scaffoldKey,
+      key: sKey,
       appBar: isDesktop
           ? null
           : AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(page.title),
-        forceMaterialTransparency: true,
-      ),
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              title: Text(page.title),
+              forceMaterialTransparency: true,
+            ),
       drawer: MyDrawer(
         currentPage: page,
-          navigateToPage: (page) {
-            context.go(page.routeLocation);
-          },
+        navigateToPage: (page) {
+          context.go(page.routeLocation);
+        },
       ),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
