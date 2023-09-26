@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../common/navigation/pages_data.dart';
 import '../../common/views/page_wrapper.dart';
 import '../../constants.dart';
-import '../../providers/menu_app_controller.dart';
 import '../../providers/services/auth_provider.dart';
 import '../../responsive.dart';
 
@@ -46,12 +45,14 @@ class _DemoScreenState extends State<DemoScreen> {
                 label: const Text("Logout"),
               ),
             ),
-            Consumer(builder: (context, ref, child) {
-              return IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: ref.read(menuAppControllerProvider.notifier).controlMenu,
-              );
-            }),
+            Consumer(
+              builder: (context, ref, child) {
+                return IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: Scaffold.of(context).isDrawerOpen ? Scaffold.of(context).closeDrawer : Scaffold.of(context).openDrawer,
+                );
+              },
+            ),
           ],
         ),
       ),

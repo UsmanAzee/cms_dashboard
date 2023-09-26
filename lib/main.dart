@@ -1,6 +1,5 @@
 import 'package:cms_dashboard/common/navigation/router_provider.dart';
 import 'package:cms_dashboard/providers/app_config_provider.dart';
-import 'package:cms_dashboard/providers/menu_app_controller.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

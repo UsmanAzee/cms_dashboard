@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/menu_app_controller.dart';
 import '../../providers/services/network_connectivity_provider.dart';
 import '../../responsive.dart';
 import '../../screens/demo/demo_screen.dart';
@@ -103,13 +102,10 @@ class _MyScaffoldState extends ConsumerState<MyScaffoldNav> {
       }
     });
 
-    final Key scaffoldKey = ref.watch(menuAppControllerProvider);
-
     final bool isDesktop = Responsive.isDesktop(context);
 
     // Scaffold wrapper
     return Scaffold(
-      key: scaffoldKey,
       appBar: isDesktop
           ? null
           : AppBar(

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../constants.dart';
-import '../../../../../providers/menu_app_controller.dart';
 import '../../../../../responsive.dart';
 
 class Header extends ConsumerWidget {
@@ -15,11 +14,11 @@ class Header extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        // if (!Responsive.isDesktop(context))
-        //   IconButton(
-        //     icon: const Icon(Icons.menu),
-        //     onPressed: ref.read(menuAppControllerProvider.notifier).controlMenu,
-        //   ),
+        if (!Responsive.isDesktop(context))
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: Scaffold.of(context).isDrawerOpen ? Scaffold.of(context).closeDrawer : Scaffold.of(context).openDrawer,
+          ),
         if (!Responsive.isMobile(context))
           Text(
             "Dashboard",

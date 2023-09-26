@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../providers/menu_app_controller.dart';
 import '../../providers/services/network_connectivity_provider.dart';
 import '../../responsive.dart';
 import '../views/custom_snackbar.dart';
@@ -14,11 +12,8 @@ class MyScaffoldRouter extends ConsumerWidget {
   final Widget body;
   final PageData page;
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
-
   const MyScaffoldRouter({
     super.key,
-    required this.scaffoldKey,
     required this.body,
     required this.page,
   });
@@ -57,13 +52,10 @@ class MyScaffoldRouter extends ConsumerWidget {
       }
     });
 
-    final GlobalKey<ScaffoldState> sKey = ref.watch(menuAppControllerProvider);
-
     final bool isDesktop = Responsive.isDesktop(context);
 
     // Scaffold wrapper
     return Scaffold(
-      key: sKey,
       appBar: isDesktop
           ? null
           : AppBar(
