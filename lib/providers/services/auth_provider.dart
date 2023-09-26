@@ -50,7 +50,8 @@ class AuthenticationService extends Notifier<AuthCredential?> {
 
   Future<bool> signInWithGoogle() async {
     try {
-      UserCredential cred = await ref.watch(firebaseAuthProvider).signInWithProvider(GoogleAuthProvider());
+      final FirebaseAuth authProvider = ref.watch(firebaseAuthProvider);
+      UserCredential cred = await authProvider.signInWithProvider(GoogleAuthProvider());
       state = cred.credential;
       ref.watch(sharedPrefsProvider).setString(
           _prefs_key,
@@ -65,6 +66,39 @@ class AuthenticationService extends Notifier<AuthCredential?> {
     } catch (err) {
       debugPrint("error signing in with google");
       return false;
+    }
+  }
+
+  Future<UserCredential?> signInWithGoogleWeb() async {
+    try {
+      // // Trigger the authentication flow
+      // final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      //
+      // // Obtain the auth details from the request
+      // final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      //
+      // // Create a new credential
+      // final credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth?.accessToken,
+      //   idToken: googleAuth?.idToken,
+      // );
+      //
+      // // Once signed in, return the UserCredential
+      // return await FirebaseAuth.instance.signInWithCredential(credential);
+
+      GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+      googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+      googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+      // Or use signInWithRedirect
+      // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+    } catch (err) {
+      debugPrint("error signing in with google");
+      return null;
     }
   }
 

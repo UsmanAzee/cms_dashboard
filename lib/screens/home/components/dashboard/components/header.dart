@@ -1,3 +1,5 @@
+import 'package:cms_dashboard/common/utils/utils.dart';
+import 'package:cms_dashboard/providers/services/user_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,11 +16,11 @@ class Header extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        if (!Responsive.isDesktop(context))
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: Scaffold.of(context).isDrawerOpen ? Scaffold.of(context).closeDrawer : Scaffold.of(context).openDrawer,
-          ),
+        // if (!Responsive.isDesktop(context))
+        //   IconButton(
+        //     icon: const Icon(Icons.menu),
+        //     onPressed: Scaffold.of(context).isDrawerOpen ? Scaffold.of(context).closeDrawer : Scaffold.of(context).openDrawer,
+        //   ),
         if (!Responsive.isMobile(context))
           Text(
             "Dashboard",
@@ -32,13 +34,32 @@ class Header extends ConsumerWidget {
   }
 }
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends ConsumerWidget {
   const ProfileCard({
     Key? key,
   }) : super(key: key);
 
+  Widget getProfileImage(String? url) {
+    if (isValidUrl(url)) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: Image.network(
+          url!,
+          height: 38,
+        ),
+      );
+    } else {
+      return Image.asset(
+        "assets/images/profile_pic.png",
+        height: 38,
+      );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UserInfo userInfo = ref.watch(userInfoProvider);
+
     return Container(
       margin: const EdgeInsets.only(left: defaultPadding),
       padding: const EdgeInsets.symmetric(
@@ -52,14 +73,11 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(
-            "assets/images/profile_pic.png",
-            height: 38,
-          ),
+          getProfileImage(userInfo.photoURL),
           if (!Responsive.isMobile(context))
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Angelina Jolie"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+              child: Text(userInfo.displayName),
             ),
           const Icon(Icons.keyboard_arrow_down),
         ],

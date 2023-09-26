@@ -120,7 +120,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               LoadingButton(
                 onPressed: () async {
                   try {
-                    await auth.signInWithGoogle();
+                    // await auth.signInWithGoogle();
+                    await auth.signInWithGoogleWeb();
                   } catch (err) {
                     debugPrint("Error signing in using google: $err");
                   }

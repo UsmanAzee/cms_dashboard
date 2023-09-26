@@ -3,6 +3,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'loading_modal.dart';
 
+bool isValidUrl(String? url) {
+  try {
+    if (url == null) return false;
+    Uri.parse(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 // Opens the uri in browser
 Future<void> openHttpsUri({required String url}) async {
   try {

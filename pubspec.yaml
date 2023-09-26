@@ -58,6 +58,7 @@ dependencies:
   # fluttercommunity.dev
   package_info_plus: ^4.1.0
   connectivity_plus: ^4.0.2
+  cloud_firestore: ^4.9.2
   #
 
 dev_dependencies:

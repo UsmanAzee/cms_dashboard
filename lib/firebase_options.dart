@@ -21,9 +21,15 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
@@ -53,28 +59,9 @@ class DefaultFirebaseOptions {
     measurementId: 'G-WHJSVS63BW',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDlax2x_Zecx7sSqdSvGRCR_EljLjzeV_s',
-    appId: '1:497516535154:android:cda4113e8fd8ca061111eb',
-    messagingSenderId: '497516535154',
-    projectId: 'fl-riverpod',
-    storageBucket: 'fl-riverpod.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDmwmV9qcEoO57zwQXklEbXhnIJkMgg3zU',
-    appId: '1:497516535154:ios:aff4045e0488c5861111eb',
-    messagingSenderId: '497516535154',
-    projectId: 'fl-riverpod',
-    storageBucket: 'fl-riverpod.appspot.com',
-    androidClientId: '497516535154-pitmbivmjlgrov00smc9c6oemgc161cu.apps.googleusercontent.com',
-    iosClientId: '497516535154-hb8fhlaqf6e3ujhkf272bf56c6pqj2ee.apps.googleusercontent.com',
-    iosBundleId: 'com.example.cmsdashboard.cmsDashboard',
-  );
-
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDmwmV9qcEoO57zwQXklEbXhnIJkMgg3zU',
-    appId: '1:497516535154:ios:4f2ec7dd887552201111eb',
+    appId: '1:497516535154:ios:a8b7b6e37fec826e1111eb',
     messagingSenderId: '497516535154',
     projectId: 'fl-riverpod',
     storageBucket: 'fl-riverpod.appspot.com',

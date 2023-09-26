@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,6 +16,20 @@ class DemoScreen extends StatefulWidget {
 }
 
 class _DemoScreenState extends State<DemoScreen> {
+  Future<void> checkCloudFirestoreData() async {
+    try {
+      final db = FirebaseFirestore.instance;
+      CollectionReference<Map<String, dynamic>> cc = db.collection('category');
+      QuerySnapshot<Map<String, dynamic>> sps = await cc.get();
+      debugPrint("Check fetched categories");
+      for (var doc in sps.docs) {
+        print("${doc.id} => ${doc.data()}");
+      }
+    } catch (err) {
+      debugPrint("Error fetching data from firestore: ${err.toString()}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageWrapper(
@@ -46,12 +61,10 @@ class _DemoScreenState extends State<DemoScreen> {
               ),
             ),
             Consumer(
-              builder: (context, ref, child) {
-                return IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: Scaffold.of(context).isDrawerOpen ? Scaffold.of(context).closeDrawer : Scaffold.of(context).openDrawer,
-                );
-              },
+              builder: (context, ref, child) => IconButton(
+                icon: const Icon(Icons.ac_unit),
+                onPressed: checkCloudFirestoreData,
+              ),
             ),
           ],
         ),
